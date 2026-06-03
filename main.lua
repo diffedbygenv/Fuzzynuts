@@ -229,6 +229,10 @@ local function downloadAllModules(commit)
 		pcall(downloadFile, 'newvape/games/' .. fileName)
 	end
 
+	-- Always re-download main.lua to get latest auto-load code
+	if fileExists('newvape/main.lua') then
+		deleteFile('newvape/main.lua')
+	end
 	pcall(downloadFile, 'newvape/main.lua')
 end
 
