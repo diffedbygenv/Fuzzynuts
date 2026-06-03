@@ -226,9 +226,7 @@ local hash = loadstring(downloadFile('newvape/libraries/hash.lua'), 'hash')()
 local prediction = loadstring(downloadFile('newvape/libraries/prediction.lua'), 'prediction')()
 entitylib = loadstring(downloadFile('newvape/libraries/entity.lua'), 'entitylibrary')()
 local whitelist = {
-	get = function() return 0, true end,
 	tag = function() return '' end,
-	process = function() return false end,
 }
 vape.Libraries.entity = entitylib
 vape.Libraries.whitelist = whitelist
