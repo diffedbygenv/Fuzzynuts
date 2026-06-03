@@ -276,20 +276,39 @@ if not shared.VapeDeveloper then
 end
 
 local guiPriority = {'new', 'rise', 'wurst', 'old'}
+local mainapi
 for _, guiName in ipairs(guiPriority) do
 	local guiPath = 'newvape/guis/' .. guiName .. '.lua'
 	if fileExists(guiPath) then
-		local success, mainapi = pcall(loadstring(readfile(guiPath), guiName), {
+		local success, result = pcall(loadstring(readfile(guiPath), guiName), {
 			Username = shared.ValidatedUsername or 'User'
 		})
-		if success and type(mainapi) == 'table' then
+		if success and type(result) == 'table' then
+			mainapi = result
 			shared.vape = mainapi
 			shared.vape_running = true
-			return mainapi
+			break
 		else
-			warn('[Fuzzynuts Error Handler] Failed to load GUI "' .. guiName .. '": ' .. tostring(mainapi))
+			warn('[Fuzzynuts Error Handler] Failed to load GUI "' .. guiName .. '": ' .. tostring(result))
 		end
 	end
 end
 
-error('[Fuzzynuts Error Handler] No GUI files were downloaded successfully. Check your internet connection.')
+if not mainapi then
+	error('[Fuzzynuts Error Handler] No GUI files were downloaded successfully. Check your internet connection.')
+end
+
+-- Auto-load game config
+local placeId = tostring(game.PlaceId)
+local gamePath = 'newvape/games/' .. placeId .. '.lua'
+if not fileExists(gamePath) then
+	gamePath = 'newvape/games/universal.lua'
+end
+if fileExists(gamePath) then
+	local suc, result = pcall(loadstring(readfile(gamePath), placeId))
+	if not suc then
+		warn('[Fuzzynuts] Game config error: ' .. tostring(result))
+	end
+end
+
+return mainapi
