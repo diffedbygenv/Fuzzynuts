@@ -131,7 +131,8 @@ local AntiFallPart
 local bedwars, remotes, sides, oldinvrender, oldSwing = {}, {}, {}
 local originalKnit
 local function getAccountTier(player)
-	return 99
+	if player == lplr then return 99 end
+	return 0
 end  
 
 local function addBlur(parent)
