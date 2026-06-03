@@ -303,16 +303,32 @@ if not mainapi then
 end
 
 -- Auto-load game config
-local placeId = tostring(game.PlaceId)
-local gamePath = 'newvape/games/' .. placeId .. '.lua'
-if not fileExists(gamePath) then
-	gamePath = 'newvape/games/universal.lua'
-end
-if fileExists(gamePath) then
-	local suc, result = pcall(loadstring(readfile(gamePath), placeId))
-	if not suc then
-		warn('[Fuzzynuts] Game config error: ' .. tostring(result))
+local function loadGameConfig()
+	local placeId = tostring(game.PlaceId)
+	local gamePath = 'newvape/games/' .. placeId .. '.lua'
+	if not fileExists(gamePath) then
+		gamePath = 'newvape/games/universal.lua'
+	end
+	if fileExists(gamePath) then
+		local suc, result = pcall(loadstring(readfile(gamePath), placeId))
+		if not suc then
+			warn('[Fuzzynuts] Game config error: ' .. tostring(result))
+		end
 	end
 end
+
+loadGameConfig()
+
+-- Re-load game config when PlaceId changes (e.g. lobby -> match)
+task.spawn(function()
+	local lastPlaceId = game.PlaceId
+	while task.wait(1) do
+		if game.PlaceId ~= lastPlaceId then
+			lastPlaceId = game.PlaceId
+			task.wait(2)
+			loadGameConfig()
+		end
+	end
+end)
 
 return mainapi
