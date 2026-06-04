@@ -41,7 +41,7 @@ local function downloadFile(path, func)
 		local success = false
 		for attempt = 1, 3 do
 			local suc, result = pcall(function()
-				return game:HttpGet('https://raw.githubusercontent.com/toodiesjamming-stack/Fuzzynuts/' .. readfile('newvape/profiles/commit.txt') .. '/' .. select(1, path:gsub('newvape/', '')), true)
+				return game:HttpGet('https://raw.githubusercontent.com/diffedbygenv/Fuzzynuts/' .. readfile('newvape/profiles/commit.txt') .. '/' .. select(1, path:gsub('newvape/', '')), true)
 			end)
 			if suc and result ~= '404: Not Found' then
 				res = result
@@ -112,7 +112,7 @@ local function finishLoading()
 		if (not teleportedServers) and (not shared.VapeIndependent) then
 			teleportedServers = true
 			local teleportScript = [[
-				loadstring(game:HttpGet('https://raw.githubusercontent.com/toodiesjamming-stack/Fuzzynuts/'..readfile('newvape/profiles/commit.txt')..'/loader.lua', true), 'loader')()
+				loadstring(game:HttpGet('https://raw.githubusercontent.com/diffedbygenv/Fuzzynuts/'..readfile('newvape/profiles/commit.txt')..'/loader.lua', true), 'loader')()
 			]]
 			if shared.VapeDeveloper then
 				teleportScript = 'shared.VapeDeveloper = true\n' .. teleportScript
@@ -213,7 +213,7 @@ if not vape then
 end
 if not vape.Load then
 	if delfile then pcall(function() delfile('newvape/guis/' .. gui .. '.lua') end) end
-	error('[Fuzzynuts] gui file corrupted (missing load) reinject..')
+	error('[Fuzyynuts] gui file corrupted (missing load) reinject..')
 end
 shared.vape = vape
 task.wait(0.1)
@@ -245,7 +245,7 @@ if not shared.VapeIndependent then
 	else
 		if not shared.VapeDeveloper then
 			local suc, res = pcall(function()
-				return game:HttpGet('https://raw.githubusercontent.com/toodiesjamming-stack/Fuzzynuts/' .. readfile('newvape/profiles/commit.txt') .. '/games/' .. gameFileId .. '.lua', true)
+				return game:HttpGet('https://raw.githubusercontent.com/diffedbygenv/Fuzzynuts/' .. readfile('newvape/profiles/commit.txt') .. '/games/' .. gameFileId .. '.lua', true)
 			end)
 			if suc and res ~= '404: Not Found' then
 				_realLoadstring(downloadFile('newvape/games/' .. gameFileId .. '.lua'), tostring(gameFileId))(...)
