@@ -79,7 +79,7 @@ end
 
 if not shared.VapeDeveloper then
 	local _, subbed = pcall(function()
-		return game:HttpGet('https://github.com/toodiesjamming-stack/Fuzzynuts')
+		return game:HttpGet('https://github.com/diffedbygenv/Fuzzynuts')
 	end)
 	local commit = 'main'
 	local ok, res = pcall(function()
